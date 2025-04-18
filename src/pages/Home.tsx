@@ -1,4 +1,4 @@
-import commingSoon from "../../../images/comming-soon.png";
+import commingSoon from "../assets/images/comming-soon.png";
 import { Container } from "../components/ui-common/Container";
 export const Home = () => {
   return (

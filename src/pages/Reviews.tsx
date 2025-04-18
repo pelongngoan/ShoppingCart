@@ -1,5 +1,5 @@
 import { Container } from "@mui/material";
-import commingSoon from "../../../images/comming-soon.png";
+import commingSoon from "../assets/images/comming-soon.png";
 
 export const Reviews = () => {
   return (

@@ -12,8 +12,10 @@ const Button = ({
 }: IPropsButton) => {
   return (
     <button
-      className={`flex items-center justify-center duration-100 shadow-md gap-2 rounded-md px-4 py-2 hover:cursor-pointer ${
-        disabled && "opacity-50 cursor-not-allowed"
+      className={`flex items-center justify-center duration-100 shadow-md gap-2 rounded-md px-4 py-2  ${
+        disabled
+          ? "opacity-50 cursor-not-allowed"
+          : "hover:cursor-pointer active:scale-95"
       } ${className}`}
       {...props}
       disabled={disabled}

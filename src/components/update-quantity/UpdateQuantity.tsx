@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Button from "../ui-common/Button";
 
 interface IUpdateQuantityProps {
@@ -9,6 +8,7 @@ interface IUpdateQuantityProps {
   decrementStyle?: string;
   maxQuantity?: number;
   minQuantity?: number;
+  price: number;
 }
 export const UpdateQuantity = ({
   quantity,
@@ -18,36 +18,42 @@ export const UpdateQuantity = ({
   decrementStyle,
   maxQuantity = 99,
   minQuantity = 1,
+  price,
 }: IUpdateQuantityProps) => {
   return (
-    <div className="flex items-center gap-5 bg-gray-100 rounded-lg p-2">
-      <Button
-        className={`bg-gray-200 text-gray-500 font-bold ${
-          quantity === minQuantity && "opacity-50 cursor-not-allowed"
-        } ${decrementStyle}`}
-        disabled={quantity === minQuantity}
-        onClick={onDecrease}
-      >
-        <i
-          className={`fa-solid fa-minus text-lg ${
-            quantity === 1 ? "text-gray-500" : "text-[#e1772c]"
-          }`}
-        ></i>
-      </Button>
-      <p>{quantity}</p>
-      <Button
-        className={`bg-gray-200 text-gray-500 ${
-          quantity === maxQuantity && "opacity-50 cursor-not-allowed"
-        } ${incrementStyle}`}
-        disabled={quantity === maxQuantity}
-        onClick={onIncrease}
-      >
-        <i
-          className={`fa-solid fa-plus text-lg ${
-            quantity === 99 ? "text-gray-500" : "text-[#e1772c]"
-          }`}
-        ></i>
-      </Button>
+    <div className="w-full flex justify-between items-center gap-5">
+      <div className="flex items-center gap-5 rounded-lg bg-gray-100 ">
+        <Button
+          className={`bg-gray-200 text-gray-500 font-bold ${
+            quantity === minQuantity && "opacity-50 cursor-not-allowed"
+          } ${decrementStyle}`}
+          disabled={quantity === minQuantity}
+          onClick={onDecrease}
+        >
+          <i
+            className={`fa-solid fa-minus text-lg ${
+              quantity === minQuantity ? "text-gray-500" : "text-[#FF7300]"
+            }`}
+          ></i>
+        </Button>
+        <p>{quantity}</p>
+        <Button
+          className={`bg-gray-200 text-gray-500 ${
+            quantity === maxQuantity && "opacity-50 cursor-not-allowed"
+          } ${incrementStyle}`}
+          disabled={quantity === maxQuantity}
+          onClick={onIncrease}
+        >
+          <i
+            className={`fa-solid fa-plus text-lg ${
+              quantity === maxQuantity ? "text-gray-500" : "text-[#FF7300]"
+            }`}
+          ></i>
+        </Button>
+      </div>
+      <div className="flex items-center gap-5">
+        <p className="text-2xl font-bold">${(price * quantity).toFixed(2)}</p>
+      </div>
     </div>
   );
 };

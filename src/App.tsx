@@ -2,13 +2,16 @@ import "./App.css";
 import { Outlet } from "react-router-dom";
 import { Navbar } from "./components/navbar/Navbar";
 import { CircularProgress } from "@mui/material";
-import { useSelector } from "react-redux";
 import { RootState } from "./redux/configureStore";
 import { Container } from "./components/ui-common/Container";
+import { Toaster } from "react-hot-toast";
+import { useSelector } from "react-redux";
+
 function App() {
   const { loading } = useSelector((state: RootState) => state.loading);
   return (
     <>
+      <Toaster />
       <Navbar />
       {loading && (
         <div
@@ -18,7 +21,7 @@ function App() {
           <CircularProgress size={70} />
         </div>
       )}
-      <Container className="min-w-3sm">
+      <Container className="min-w-md ">
         <Outlet />
       </Container>
     </>

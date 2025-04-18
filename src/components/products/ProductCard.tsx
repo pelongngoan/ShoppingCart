@@ -1,9 +1,9 @@
-import { useDispatch } from "react-redux";
 import { IProduct } from "../../interfaces";
 import { Container } from "../ui-common/Container";
-import { setHighlightProduct } from "../../redux/productSlice";
-import { removeFromCart, updateQuantity } from "../../redux/cartSlice";
 import { UpdateQuantity } from "../update-quantity/UpdateQuantity";
+import { useCart } from "../../hook/cart";
+import { useProducts } from "../../hook/products";
+import { useEffect } from "react";
 
 type CardVariant = "default" | "checkout";
 interface ICardProps {
@@ -18,52 +18,55 @@ export const ProductCard = ({
   numOfItems,
   className,
 }: ICardProps) => {
-  const dispatch = useDispatch();
+  const { onHandleRemoveFromCart, onHandleUpdateQuantity } = useCart();
+  const { onHandleSetHighlightProduct } = useProducts();
+  useEffect(() => {
+    if (numOfItems === 0) {
+      onHandleRemoveFromCart(product);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [numOfItems]);
   const handleDelete = () => {
-    dispatch(removeFromCart(product));
+    onHandleRemoveFromCart(product);
   };
   return (
     <Container
-      className={`bg-white rounded-lg p-4 flex flex-col gap-5 lg:flex-row ${className}`}
+      className={`grid grid-cols-12 bg-white rounded-lg p-4 gap-5 lg:flex-row ${className}`}
     >
-      <div className="w-full h-48">
+      <div className="col-span-4 flex justify-center items-center">
         <img
+          className="size-24 object-cover"
           src={product.imageUrl || "https://via.placeholder.com/150"}
           alt={product.productName || "Product Image"}
         />
       </div>
-      <div className="flex flex-col justify-between gap-5">
+      <div className="col-span-8 flex flex-col justify-between gap-5">
         <div className="flex flex-col gap-2">
           <div className="flex flex-row justify-between gap-2">
             <h3 className="text-lg font-bold">{product.productName}</h3>
             {variant === "checkout" && (
               <i
                 onClick={handleDelete}
-                className="fa-solid fa-trash text-red-500 hover:cursor-pointer"
+                className="fa-solid fa-trash text-[#EF4444] hover:text-red-600 active:scale-95 hover:cursor-pointer"
               ></i>
             )}
           </div>
           <p className="text-sm text-gray-500">{product.description}</p>
         </div>
-        <div className="flex flex-row justify-between gap-2 items-center">
+        <div className="flex flex-row justify-end gap-2 items-center">
           {variant === "checkout" && (
             <UpdateQuantity
+              price={product.price}
               quantity={numOfItems || 1}
-              onIncrease={() =>
-                dispatch(updateQuantity({ product, quantity: 1 }))
-              }
-              onDecrease={() =>
-                dispatch(updateQuantity({ product, quantity: -1 }))
-              }
+              minQuantity={0}
+              onIncrease={() => onHandleUpdateQuantity(product, 1, false)}
+              onDecrease={() => onHandleUpdateQuantity(product, -1, false)}
             />
           )}
-          <p className="text-lg font-bold">
-            ${(product.price * (numOfItems || 1)).toFixed(2)}
-          </p>
           {variant === "default" && (
             <p
-              onClick={() => dispatch(setHighlightProduct(product))}
-              className="text-blue-500 hover:text-blue-600 hover:cursor-pointer"
+              onClick={() => onHandleSetHighlightProduct(product)}
+              className="text-blue-500 hover:text-blue-600 hover:cursor-pointer active:scale-95"
             >
               View Details
             </p>

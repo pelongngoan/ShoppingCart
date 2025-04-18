@@ -8,7 +8,11 @@ export const ProductsList = () => {
   return (
     <Container className="grid grid-cols-1 gap-5 rounded-lg max-w-2xl min-w-3xs">
       {products.map((product) => (
-        <ProductCard key={product.productId} product={product} />
+        <ProductCard
+          className="col-span-1"
+          key={product.productId}
+          product={product}
+        />
       ))}
     </Container>
   );

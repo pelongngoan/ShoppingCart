@@ -19,17 +19,17 @@ export const toastSuccess = (msg: string, options?: ToastOptions): string => {
       backgroundColor: "rgba(16,185,129,1)",
       color: "#fff",
     },
-    className: `${toastOptions.className + " bg-green-500 text-white"}`,
+    className: `${toastOptions.className + " bg-[#10B981] text-white"}`,
   });
 };
 
 export const toastError = (msg: string, options?: ToastOptions): string =>
-  toast.success(msg, {
+  toast.error(msg, {
     ...toastOptions,
     ...options,
     icon: "❌",
     style: {
-      backgroundColor: "fff",
+      backgroundColor: "#fff",
       color: "#000",
       border: "2px solid #f56565",
     },

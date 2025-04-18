@@ -6,16 +6,20 @@ export interface IProduct {
   imageUrl: string;
 }
 
-// export interface ICart {
-//   productId: string;
-//   quantity: number;
-// }
 export interface ICart {
   quantity: number;
   product: IProduct;
 }
 
+export interface IAlert {
+  message: string;
+  type: "success" | "error";
+}
+
 export interface ICheckout {
   paySuccess: boolean;
-  productsInOrder: ICart[];
+  productsInOrder: {
+    productId: string;
+    quantity: number;
+  }[];
 }
